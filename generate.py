@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-import pandas
+import xlsxwriter
 import json
 import requests
 import os
@@ -40,8 +40,5 @@ def parseJson(json_data):
 def saveRecord(item):
     pass
 
-def main():
+def createXlsx():
     getJson()
-
-if __name__=="__main__":
-    main()
