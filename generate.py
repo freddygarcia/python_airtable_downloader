@@ -21,9 +21,8 @@ def getJson():
         json_data = json.loads(response.text)
         #get value whose status is 'Approved'
         parseJson(json_data)
-    else:
-        #404 Error
-        print("Error")
+        
+    return response.status_code
 
 def parseJson(json_data):
     """
@@ -41,4 +40,4 @@ def saveRecord(item):
     pass
 
 def createXlsx():
-    getJson()
+    return getJson()
