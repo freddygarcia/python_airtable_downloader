@@ -106,7 +106,7 @@ def main():
 
     KEY = 'key5k8M0BZMn7RNf6'
     BASE_ID = 'appEfbsDGIsNiYX6R'
-    output_name = './AllChapters.xls'
+    output_name = './AllChapters.xlsx'
 
     questions = get_questions(BASE_ID, KEY)
     questions = list(map(format_question, questions))
