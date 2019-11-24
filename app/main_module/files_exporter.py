@@ -92,6 +92,13 @@ def group_questions(questions: list) -> list:
 
     for question in questions:
         chapter = question['fields']['chapter']
+        
+        if type(chapter) == list and len(chapter) > 0:
+            chapter = chapter[0]
+
+        if type(chapter) == list and len(chapter) == 0:
+            continue
+
         if chapter in grouped_questions:
             grouped_questions[chapter].append(question)
         else:
