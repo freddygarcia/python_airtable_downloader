@@ -44,8 +44,8 @@ def format_question(question: dict) -> dict:
 
     answer = ('', 'a', 'b', 'c', 'd')
     res['Question Type'] = 'MA' if len(fields['correct_answer']) > 1 else 'SA'
-    res['Question Text'] = fields['question_text']
-    res['Explanation'] = fields['feedback']
+    res['Question Text'] = fields.get('question_text')
+    res['Explanation'] = fields.get('feedback', '')
 
     # Complete choice fields
     for k in fields.keys():
