@@ -80,7 +80,7 @@ def export_excel(output_name: str, questions: list) -> None:
                 sheet_name='QUESTIONS',
                 index=False,
                 columns=[
-                    'Question Type', 'Question Text', 'Explanation',
+                    'QuestionType', 'QuestionText', 'Explanation',
                     *['Choice' + str(c + 1) for c in range(10)]
                 ])
     return f.name
