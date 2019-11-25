@@ -2,13 +2,14 @@ from flask import Blueprint, redirect, jsonify, request, render_template, flash,
 from flask import current_app as app
 from app.main_module import api_consumer
 from app.main_module import files_exporter
+from app.main_module import session_helper
 
 routes = Blueprint('routes', __name__, url_prefix='/')
 
 
 @routes.route("/")
 def index():
-    files_exporter.check_old_files(session)
+    session_helper.check_old_files(session)
     return render_template('index.html')
 
 
@@ -16,15 +17,15 @@ def index():
 def download_files():
     base_id = request.form.get('base')
     api_key = request.form.get('key')
-    questions = api_consumer.get_questions(base_id, api_key)
+    questions = api_consumer.questions # get_questions(base_id, api_key)
 
     if not questions['success']:
         code = questions['code']
         reason = questions['content']
-        return jsonify(reason), questions['code']
+        return jsonify(reason), code
 
-    files = files_exporter.export_questions(questions)
-    files = files_exporter.files_to_json(session, files)
+    files = files_exporter.GeneralExporter.export_questions(questions)
+    session_helper.save_files_in_session(session, files)
     return jsonify(files), 200
 
 
