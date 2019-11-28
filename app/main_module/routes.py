@@ -17,7 +17,7 @@ def index():
 def download_files():
     base_id = request.form.get('base')
     api_key = request.form.get('key')
-    questions = api_consumer.questions # get_questions(base_id, api_key)
+    questions = api_consumer.get_questions(base_id, api_key)
 
     if not questions['success']:
         code = questions['code']
