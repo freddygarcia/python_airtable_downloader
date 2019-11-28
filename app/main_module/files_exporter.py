@@ -69,10 +69,6 @@ class FileExporter(metaclass=abc.ABCMeta):
                     sheet_name='QUESTIONS',
                     index=False,
                     columns=self.EXCEL_COLUMNS)
-        # [
-        #     'QuestionType', 'QuestionText', 'Explanation',
-        #     *['Choice' + str(c + 1) for c in range(10)]
-        # ])
         return f.name
 
     @abc.abstractstaticmethod
@@ -105,8 +101,8 @@ class ThinkificExporter(FileExporter):
         answer = ('', 'a', 'b', 'c', 'd')
         res['QuestionType'] = 'MA' if len(
             fields['correct_answer']) > 1 else 'SA'
-        res['QuestionText'] = fields.get('question_text')
-        res['Explanation'] = fields.get('feedback', '')
+        res['QuestionText'] = '<p>' + fields.get('question_text') + '</p>'
+        res['Explanation'] = '<p>' + fields.get('feedback', '') + '</p>'
 
         # Complete choice fields
         for k in fields.keys():
@@ -148,13 +144,10 @@ class iSpringExporter(FileExporter):
             res['Answer' + str(i + 1)] = ''
 
         answer = ('', 'a', 'b', 'c', 'd')
-        res['QuestionType'] = 'MR' if len(
-            fields['correct_answer']) > 1 else 'MC'
+        res['QuestionType'] = 'MR' if len(fields['correct_answer']) > 1 else 'MC'
         res['QuestionText'] = fields.get('question_text')
-        res['CorrectFeedBack'] = 'That\'s correct - ' + \
-            fields.get('feedback', '')
-        res['IncorrectFeedBack'] = 'Sorry, that\'s incorrect - ' + \
-            fields.get('feedback', '')
+        res['CorrectFeedBack'] = 'That\'s correct - ' + fields.get('feedback', '')
+        res['IncorrectFeedBack'] = 'Sorry, that\'s incorrect - ' + fields.get('feedback', '')
         res['Points'] = 1
 
         # Complete choice fields
@@ -169,8 +162,7 @@ class iSpringExporter(FileExporter):
             letter = letter.lower()
             option_content = fields.get('option_' + letter, '')
 
-            res['Answer' + str(answer.index(letter))] = '*' + \
-                option_content + ' | That\'s correct'
+            res['Answer' + str(answer.index(letter))] = '*' + option_content
 
         return res
 
