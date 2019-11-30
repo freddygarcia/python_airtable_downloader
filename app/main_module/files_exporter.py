@@ -99,10 +99,11 @@ class ThinkificExporter(FileExporter):
             res['Choice' + str(i + 1)] = ''
 
         answer = ('', 'a', 'b', 'c', 'd')
-        res['QuestionType'] = 'MA' if len(
-            fields['correct_answer']) > 1 else 'SA'
-        res['QuestionText'] = '<p>' + fields.get('question_text') + '</p>'
+        res['QuestionType'] = 'MA' if len(fields['correct_answer']) > 1 else 'SA'
         res['Explanation'] = '<p>' + fields.get('feedback', '') + '</p>'
+
+        # surround each line inside <p> tag
+        res['QuestionText'] = '\n'.join(map(lambda c: '<p>' + c + '</p>',fields.get('question_text', '').split('\n')))
 
         # Complete choice fields
         for k in fields.keys():
