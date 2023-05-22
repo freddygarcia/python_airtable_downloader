@@ -1,6 +1,6 @@
 flask==1.1.1
 Flask-Session==0.3.1
 pandas==0.25.3
-requests==2.22.0
+requests==2.31.0
 python-dotenv==0.10.3
 XlsxWriter==1.2.6
